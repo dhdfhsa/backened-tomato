@@ -1,5 +1,5 @@
 {
-  "name": "backened",
+  "name": "backened-tomato",
   "version": "1.0.0",
   "description": "",
   "main": "api/server.js",

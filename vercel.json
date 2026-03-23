@@ -1,4 +1,5 @@
 {
+  "name": "backened-tomato",
   "version": 2,
   "builds": [
     {
