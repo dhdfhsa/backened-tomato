@@ -1,0 +1,17 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+[branch "main"]
+	vscode-merge-base = origin/master2
+[branch "vercel-clean"]
+	vscode-merge-base = origin/master2
+[user]
+	name = dhdfhsa
+	email = safwanwr111@gmail.com
+[remote "origin"]
+	url = https://github.com/dhdfhsa/backened-tomato.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
