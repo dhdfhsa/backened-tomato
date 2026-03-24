@@ -20,7 +20,11 @@ const uploadsDir = path.join(__dirname, "..", "uplodes");
 // middleware
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+  origin: "https://frontened-tomato.vercel.app", // আপনার ফ্রন্টএন্ড লিঙ্ক
+  methods: ["GET", "POST"],
+  credentials: true
+}));
 
 // db connection
 
