@@ -22,7 +22,7 @@ const uploadsDir = path.join(__dirname, "..", "uplodes");
 app.use(express.json())
 const allowedOrigins = [
   "https://frontened-tomato.vercel.app",
-  "https://admin-tomato1-2zh5.vercel.app"
+  "https://admin-tomato1.vercel.app"
 ];
 
 app.use(cors({
