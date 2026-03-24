@@ -20,21 +20,22 @@ const uploadsDir = path.join(__dirname, "..", "uplodes");
 // middleware
 
 app.use(express.json())
-const allowedOrigins = [
-  "https://frontened-tomato.vercel.app",
-  "https://admin-tomato1.vercel.app"
-];
+app.use(cors())
+// const allowedOrigins = [
+//   "https://frontened-tomato.vercel.app",
+//   "https://admin-tomato1.vercel.app"
+// ];
 
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true
-}));
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   credentials: true
+// }));
 
 // db connection
 
