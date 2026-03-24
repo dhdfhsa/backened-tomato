@@ -20,9 +20,19 @@ const uploadsDir = path.join(__dirname, "..", "uplodes");
 // middleware
 
 app.use(express.json())
+const allowedOrigins = [
+  "https://frontened-tomato.vercel.app",
+  "https://admin-tomato1-2zh5.vercel.app"
+];
+
 app.use(cors({
-  origin: "https://frontened-tomato.vercel.app", // আপনার ফ্রন্টএন্ড লিঙ্ক
-  methods: ["GET", "POST"],
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 
