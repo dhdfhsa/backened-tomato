@@ -38,15 +38,11 @@ app.use(cors())
 // }));
 
 // db connection
-
-app.use(async (req, res, next) => {
-    try {
-        await connectDB();
-        next();
-    } catch (error) {
-        console.error("Database connection failed", error);
-        res.status(500).json({ success: false, message: "Database connection failed" });
-    }
+connectDB().then(() => {
+    console.log("Database connected successfully");
+}).catch((error) => {
+    console.error("Database connection failed:", error);
+    // Don't crash the server, but log the error
 });
 
 // api endpoints
@@ -59,6 +55,14 @@ app.use("/api/order",orderRouter)
 
 app.get("/",(req,res)=>{
     res.send("Hello work Api")
+})
+
+app.get("/health",(req,res)=>{
+    res.json({
+        status: "OK",
+        timestamp: new Date().toISOString(),
+        environment: process.env.NODE_ENV || "development"
+    })
 })
 
 app.use((error, _req, res, _next) => {

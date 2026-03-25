@@ -4,22 +4,34 @@ import fs from 'fs'
 // add food items
 
 const addFood = async (req, res) => {
-    // multer-storage-cloudinary ইমেজ পাথটি req.file.path এ দেয়
-    let image_filename = req.file.path; 
-
-    const food = new foodModel({
-        name: req.body.name,
-        description: req.body.description,
-        price: req.body.price,
-        category: req.body.category,
-        image: image_filename // এখন এটি সরাসরি Cloudinary-র লিঙ্ক সেভ করবে
-    })
     try {
+        // Check if file was uploaded
+        if (!req.file) {
+            return res.status(400).json({success: false, message: "Image file is required"})
+        }
+
+        // multer-storage-cloudinary ইমেজ পাথটি req.file.path এ দেয়
+        let image_filename = req.file.path;
+
+        // Validate required fields
+        const { name, description, price, category } = req.body;
+        if (!name || !description || !price || !category) {
+            return res.status(400).json({success: false, message: "All fields are required"})
+        }
+
+        const food = new foodModels({
+            name: req.body.name,
+            description: req.body.description,
+            price: req.body.price,
+            category: req.body.category,
+            image: image_filename // এখন এটি সরাসরি Cloudinary-র লিঙ্ক সেভ করবে
+        })
+
         await food.save();
         res.json({success: true, message: "Food Added Successfully"})
     } catch (error) {
-        console.log(error)
-        res.json({success: false, message: "Error adding food"})
+        console.error("Error adding food:", error)
+        res.status(500).json({success: false, message: "Error adding food", error: error.message})
     }
 }
 // all Food List
@@ -52,7 +64,8 @@ const removeFood  = async(req,res)=>{
 
         const imagePath = `uplodes/${food.image}`;
 
-        if (fs.existsSync(imagePath)) {
+        // Only delete local files, not Cloudinary URLs
+        if (!food.image.startsWith('http') && fs.existsSync(imagePath)) {
             fs.unlinkSync(imagePath)
         }
 

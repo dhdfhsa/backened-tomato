@@ -27,7 +27,13 @@ const upload = multer({ storage: storage });
 
 // ৩. সব রাউট বা এন্ডপয়েন্ট (Endpoints)
 // নতুন খাবার যোগ করার জন্য (অ্যাডমিন প্যানেল থেকে)
-foodRouter.post("/add", upload.single("image"), addFood);
+foodRouter.post("/add", upload.single("image"), (req, res, next) => {
+    console.log("Food add request received:", {
+        body: req.body,
+        file: req.file ? "present" : "missing"
+    });
+    next();
+}, addFood);
 
 // খাবারের তালিকা দেখার জন্য (ফ্রন্টএন্ড এবং অ্যাডমিন উভয়ের জন্য)
 foodRouter.get("/list", listFood);
