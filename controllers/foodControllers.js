@@ -39,6 +39,15 @@ const addFood = async (req, res) => {
 const listFood = async (req,res)=>{
     try {
         const foods = await foodModels.find({})
+        // Log for debugging
+        console.log("Foods retrieved:", foods.length);
+        if (foods.length > 0) {
+            console.log("Sample food:", {
+                name: foods[0].name,
+                image: foods[0].image,
+                imageType: typeof foods[0].image
+            });
+        }
         res.json({success:true,data:foods})
     } catch (error) {
         console.log(error)
